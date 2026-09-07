@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  redis-broker:
+    image: redis:alpine
+    # We don't expose ports; it remains completely internal and secure
+
+  api-producer:
+    build: .
+    command: uvicorn producer:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8080:8000"
+    environment:
+      - REDIS_URL=redis://redis-broker:6379
+    depends_on:
+      - redis-broker
+
+  worker-1:
+    build: .
+    command: python worker.py
+    environment:
+      - REDIS_URL=redis://redis-broker:6379
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - redis-broker
+
+  worker-2:
+    build: .
+    command: python worker.py
+    environment:
+      - REDIS_URL=redis://redis-broker:6379
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - redis-broker
