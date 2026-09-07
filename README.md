@@ -23,7 +23,7 @@ You can spin up the entire distributed cluster (API + Redis + Multiple Workers) 
 
 ```bash
 # Clone the repository
-git clone [https://github.com/g75tsnhg4y-star/TaskFabric.git](https://github.com/g75tsnhg4y-star/TaskFabric.git)
+git clone https://github.com/g75tsnhg4y-star/TaskFabric.git
 cd TaskFabric
 
 # Boot the cluster
